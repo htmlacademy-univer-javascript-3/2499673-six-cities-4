@@ -1,5 +1,5 @@
 const Config = {
-    displayedPlaces: 5
+    displayedPlaces: 4
 };
 
 export default Config;
