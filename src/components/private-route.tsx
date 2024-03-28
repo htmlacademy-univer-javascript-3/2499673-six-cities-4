@@ -6,5 +6,5 @@ type PrivateRouteProps = {
 
 export default function PrivateRoute({ children }: PrivateRouteProps): JSX.Element {
   const isAuthorized = false;
-  return isAuthorized ? children : <Navigate to="/login"/>;
+  return isAuthorized ? children : <Navigate to="/login" />;
 }
