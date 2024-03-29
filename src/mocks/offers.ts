@@ -3,6 +3,7 @@ import { OfferType } from '../types';
 export const offers: OfferType[] = [
   {
     id: 0,
+    coordinates: [52.3909553943508, 4.85309666406198],
     name: 'Beautiful &amp; luxurious studio at great location',
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     valuePerNight: 120,
@@ -25,6 +26,7 @@ export const offers: OfferType[] = [
   },
   {
     id: 1,
+    coordinates: [52.3609553943508, 4.85309666406198],
     name: 'Wood and stone place',
     description: 'Good room at the centre of city',
     valuePerNight: 100,
@@ -49,6 +51,7 @@ export const offers: OfferType[] = [
   },
   {
     id: 2,
+    coordinates: [52.3909553943508, 4.929309666406198],
     name: 'Apartment',
     description: 'Nice, cozy, warm big bed apartment',
     valuePerNight: 180,
@@ -71,6 +74,7 @@ export const offers: OfferType[] = [
   },
   {
     id: 3,
+    coordinates: [52.3809553943508, 4.939309666406198],
     name: 'Room',
     description: 'A budget option with excellent views',
     valuePerNight: 52,

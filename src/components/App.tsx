@@ -1,11 +1,11 @@
-import Main from '../pages/Main.tsx';
+import Main from '../pages/Main';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PageNotFound from '../pages/PageNotFound.tsx';
-import Offer from '../pages/Offer.tsx';
-import Login from '../pages/Login.tsx';
-import Favorites from '../pages/Favorites.tsx';
-import PrivateRoute from './private-route.tsx';
-import { OfferType } from '../types.tsx'
+import PageNotFound from '../pages/PageNotFound';
+import Offer from '../pages/Offer';
+import Login from '../pages/Login';
+import Favorites from '../pages/Favorites';
+import PrivateRoute from './private-route';
+import { OfferType } from '../types'
 
 export type AppPropts = {
   displayedPlaces: number;

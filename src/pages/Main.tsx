@@ -1,13 +1,21 @@
 import { OfferType } from '../types';
 import OfferList from '../components/OfferList';
 import { Link } from 'react-router-dom';
+import Map from '../components/map';
+import { amsterdam } from '../mocks/amsterdam';
 
 type MainProps = {
   displayedPlaces: number;
   offers: OfferType[];
 }
 
+
 export default function Main({ displayedPlaces, offers }: MainProps): JSX.Element {
+  const points = offers.map((item) => ({
+    title: item.name,
+    lat: item.coordinates[0],
+    lng: item.coordinates[1]
+  }));
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -104,7 +112,9 @@ export default function Main({ displayedPlaces, offers }: MainProps): JSX.Elemen
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+            <section className="cities__map map" >
+                <Map points={points} city={amsterdam} selectedPoint={undefined}/>
+              </section>
             </div>
           </div>
         </div>
