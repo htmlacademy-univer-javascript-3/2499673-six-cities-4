@@ -8,8 +8,17 @@ type Review = {
   description: string;
 };
 
+export type Point = {
+  title: string;
+  lat: number;
+  lng: number;
+};
+
+type Coordinates = [number, number];
+
 export type OfferType = {
   id: number;
+  coordinates: Coordinates;
   name: string;
   description: string;
   img: string;
