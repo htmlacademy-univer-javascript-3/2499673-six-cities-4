@@ -4,8 +4,8 @@ type ReviewProps = {
   review: ReviewType;
 };
 
-export default function ReviewItem({review}: ReviewProps): JSX.Element {
-  const {id, date, author, avatar, rating, description} = review;
+export default function ReviewItem({ review }: ReviewProps): JSX.Element {
+  const { id, date, author, avatar, rating, description } = review;
   return (
     <li className="reviews__item" key={id}>
       <div className="reviews__user user">
@@ -19,7 +19,7 @@ export default function ReviewItem({review}: ReviewProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${rating / 5 * 100}%`}}></span>
+            <span style={{ width: `${rating / 5 * 100}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

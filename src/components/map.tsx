@@ -14,7 +14,7 @@ export default function Map(props: MapProps): JSX.Element {
     const { city, points, selectedPoint } = props;
     const mapRef = React.useRef(null);
     const map = useMap(mapRef, city);
-    
+
     useEffect(() => {
         if (map) {
             const markerLayer = layerGroup().addTo(map);
@@ -32,6 +32,6 @@ export default function Map(props: MapProps): JSX.Element {
         }
     }, [map, points, selectedPoint]);
 
-    return <div style={{height: '100%'}}
-     ref={mapRef}></div>;
+    return <div style={{ height: '100%' }}
+        ref={mapRef}></div>;
 }
