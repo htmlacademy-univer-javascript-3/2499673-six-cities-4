@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Marker, layerGroup } from 'leaflet';
 import useMap from "../use-map";
 import { Point } from '../types'
-import 'leaflet/dist/leaflet'
+import 'leaflet/dist/leaflet.css'
 
 type MapProps = {
     city: Point;
@@ -10,11 +10,11 @@ type MapProps = {
     selectedPoint: Point | undefined;
 }
 
-function Map(props: MapProps): JSX.Element {
+export default function Map(props: MapProps): JSX.Element {
     const { city, points, selectedPoint } = props;
     const mapRef = React.useRef(null);
     const map = useMap(mapRef, city);
-
+    
     useEffect(() => {
         if (map) {
             const markerLayer = layerGroup().addTo(map);
@@ -32,7 +32,6 @@ function Map(props: MapProps): JSX.Element {
         }
     }, [map, points, selectedPoint]);
 
-    return <div style={{ height: '500px' }} ref={mapRef}></div>;
+    return <div style={{height: '100%'}}
+     ref={mapRef}></div>;
 }
-
-export default Map;
