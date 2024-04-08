@@ -3,7 +3,7 @@ import OfferList from '../components/OfferList';
 import { Link } from 'react-router-dom';
 import Map from '../components/map';
 import { amsterdam } from '../mocks/amsterdam';
-import { points } from '../mocks/points'
+import { points } from '../mocks/points';
 
 type MainProps = {
   displayedPlaces: number;
@@ -116,5 +116,5 @@ export default function Main({ displayedPlaces, offers }: MainProps): JSX.Elemen
         </div>
       </main>
     </div>
-  )
+  );
 }

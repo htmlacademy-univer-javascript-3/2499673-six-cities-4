@@ -1,3 +1,3 @@
 export const DisplayedPlaces = {
-    displayedPlaces: 4
+  displayedPlaces: 4
 };

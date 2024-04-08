@@ -20,9 +20,12 @@ export default function App({ displayedPlaces, offers, reviews }: AppPropts): JS
       <Routes>
         <Route path="/" element={<Main displayedPlaces={displayedPlaces} offers={offers} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/favorites" element={<PrivateRoute>
-          <Favorites favoritesList={offers.filter((obj) => obj.isBookmarked)} />
-        </PrivateRoute>} />
+        <Route path="/favorites" element={
+          <PrivateRoute>
+            <Favorites favoritesList={offers.filter((obj) => obj.isBookmarked)} />
+          </PrivateRoute>
+        }
+        />
         <Route path="offer/:id" element={<Offer reviews={reviews} />}></Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>

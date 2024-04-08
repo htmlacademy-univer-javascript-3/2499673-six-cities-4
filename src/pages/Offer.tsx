@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import CommentForm from '../components/comment-form';
 import ReviewList from '../components/review-list';
 import Map from '../components/map';
-import { points } from '../mocks/points'
+import { points } from '../mocks/points';
 import { amsterdam } from '../mocks/amsterdam';
 import OfferList from '../components/OfferList';
 import { offers } from '../mocks/offers';
