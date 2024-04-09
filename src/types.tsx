@@ -1,4 +1,4 @@
-type Review = {
+export type ReviewType = {
   id: number;
   author: string;
   avatar: string;
@@ -14,11 +14,8 @@ export type Point = {
   lng: number;
 };
 
-type Coordinates = [number, number];
-
 export type OfferType = {
   id: number;
-  coordinates: Coordinates;
   name: string;
   description: string;
   img: string;
@@ -26,7 +23,7 @@ export type OfferType = {
   type: 'Apartment' | 'Room';
   isBookmarked: boolean;
   rating: number;
-  review: Review;
+  review: ReviewType[];
   isPremium: boolean;
   isFavorite: boolean;
   city: string;

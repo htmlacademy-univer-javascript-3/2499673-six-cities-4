@@ -7,9 +7,11 @@ export default function Card({ offer }: CardsProps) {
   const { id, isPremium, rating, valuePerNight, isBookmarked, name, type } = offer;
   return (
     <article className="cities__card place-card">
-      {isPremium && (<div className="place-card__mark">
-        <span>Premium</span>
-      </div>)}
+      {isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img
@@ -17,7 +19,8 @@ export default function Card({ offer }: CardsProps) {
             src="place.img"
             width={260}
             height={200}
-            alt="Place image" />
+            alt="Place image"
+          />
         </a>
       </div>
       <div className="place-card__info">
@@ -27,7 +30,7 @@ export default function Card({ offer }: CardsProps) {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className={`place-card__bookmark-button ${isBookmarked ? 'place-card__bookmark-button--active' : ''
-            } button`} type="button"
+          } button`} type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -47,5 +50,5 @@ export default function Card({ offer }: CardsProps) {
         <p className="place-card__type">{type}</p>
       </div>
     </article>
-  )
+  );
 }
