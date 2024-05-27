@@ -22,7 +22,7 @@ export type PointType = {
 export type OfferType = {
   id: number;
   name: string;
-  img: string;
+  img: string[];
   cost: number;
   type: 'Apartment' | 'Room';
   rating: number;
