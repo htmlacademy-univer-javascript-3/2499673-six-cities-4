@@ -1,39 +1,39 @@
 import { ReviewType } from '../types';
 
-export const reviews: ReviewType[] = [
+export const ReviewsMock: ReviewType[] = [
   {
-    id: 1,
+    id: 0,
     date: 'April 2019',
     avatar: 'img/avatar-max.jpg',
     author: 'Max',
-    description: 'Quite nice apartments with great views',
+    comment: 'Quite nice apartments with great views',
     rating: 5,
     isPro: true
   },
   {
-    id: 2,
+    id: 1,
     date: 'December 2021',
     avatar: 'img/avatar-max.jpg',
     author: 'Max',
-    description: 'Very small room with terrible heating',
+    comment: 'Very small room with terrible heating',
     rating: 1,
     isPro: false
   },
   {
-    id: 3,
+    id: 2,
     date: 'May 2022',
     avatar: 'img/avatar-angelina.jpg',
     author: 'Angelina',
-    description: 'Nice apartments with a convenient location',
+    comment: 'Nice apartments with a convenient location',
     rating: 5,
     isPro: true
   },
   {
-    id: 4,
+    id: 3,
     date: 'November 2023',
     avatar: 'img/avatar-max.jpg',
     author: 'Max',
-    description: 'Really very warm apartment with a large bed',
+    comment: 'Really very warm apartment with a large bed',
     rating: 5,
     isPro: false
   }

@@ -1,61 +1,59 @@
 import { OfferType } from '../types';
-import { reviews } from './reviews';
+import { CitiesMock } from './cities';
+import { PointsMock } from './points';
+import { ReviewsMock } from './reviews';
 
-export const offers: OfferType[] = [
-  {
-    id: 0,
-    name: 'Beautiful &amp; luxurious studio at great location',
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-    valuePerNight: 120,
-    type: 'Apartment',
-    rating: 4.4,
-    isBookmarked: true,
-    isFavorite: true,
-    review: [reviews[0]],
-    isPremium: true,
-    city: 'Amsterdam',
-    img: 'img/apartment-01.jpg'
-  },
+export const OffersMock: OfferType[] = [
   {
     id: 1,
-    name: 'Wood and stone place',
-    description: 'Good room at the centre of city',
-    valuePerNight: 100,
-    type: 'Room',
-    rating: 5,
-    isBookmarked: false,
-    isFavorite: true,
-    review: [reviews[1]],
+    img: 'img/apartment-01.jpg',
     isPremium: true,
-    city: 'Amsterdam',
-    img: 'img/apartment-02.jpg'
+    cost: 120,
+    name: 'Beautiful & luxurious studio at great location',
+    type: 'Apartment',
+    isFavorite: false,
+    rating: 4,
+    review: [ReviewsMock[0], ReviewsMock[1]],
+    city: CitiesMock[0],
+    point: PointsMock[0]
   },
   {
     id: 2,
-    name: 'Apartment',
-    description: 'Nice, cozy, warm big bed apartment',
-    valuePerNight: 180,
-    type: 'Apartment',
-    rating: 5,
-    isBookmarked: true,
-    isFavorite: true,
-    review: [reviews[2]],
+    img: 'img/room.jpg',
     isPremium: false,
-    city: 'Amsterdam',
-    img: 'img/apartment-03.jpg'
+    cost: 80,
+    name: 'Wood and stone place',
+    type: 'Room',
+    isFavorite: true,
+    rating: 4,
+    review: [ReviewsMock[1]],
+    city: CitiesMock[1],
+    point: PointsMock[1]
   },
   {
     id: 3,
-    name: 'Room',
-    description: 'A budget option with excellent views',
-    valuePerNight: 52,
-    type: 'Room',
-    rating: 3.1,
-    isBookmarked: false,
+    img: 'img/apartment-02.jpg',
+    isPremium: false,
+    cost: 132,
+    name: 'Canal View Prinsengracht',
+    type: 'Apartment',
     isFavorite: false,
-    review: [reviews[3]],
+    rating: 4.7,
+    review: [ReviewsMock[2]],
+    city: CitiesMock[0],
+    point: PointsMock[2]
+  },
+  {
+    id: 4,
+    img: 'img/apartment-03.jpg',
     isPremium: true,
-    city: 'Amsterdam',
-    img: 'img/room.jpg'
+    cost: 180,
+    name: 'Nice, cozy, warm big bed apartment',
+    type: 'Apartment',
+    isFavorite: true,
+    rating: 5,
+    review: [ReviewsMock[3]],
+    city: CitiesMock[3],
+    point: PointsMock[3]
   },
 ];

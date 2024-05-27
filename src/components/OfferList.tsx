@@ -1,15 +1,18 @@
+import { listToCard, typeOfCardList } from '../config';
 import { OfferType } from '../types';
-import Card from './cards';
+import OfferCard from './OfferCard';
 
 type OfferListProps = {
-  offerCards: OfferType[];
-}
+  offers: OfferType[];
+  listType: typeOfCardList;
+};
 
-export default function OfferList({ offerCards }: OfferListProps) {
+export default function OfferList({offers, listType}: OfferListProps): JSX.Element {
+  const type = listToCard.get(listType);
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {offerCards.map((offer) => (
-        <Card key={offer.id} offer={offer} {...offer} />
+    <div className={(listType)}>
+      {offers.map((offer) => (
+        <OfferCard key={offer.id} offer={offer} cardType={(type !== undefined) ? type : 'cities__card place-card'}/>
       ))}
     </div>
   );

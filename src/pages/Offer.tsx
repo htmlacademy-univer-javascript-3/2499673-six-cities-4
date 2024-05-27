@@ -1,18 +1,18 @@
-import { ReviewType } from '../types';
 import { Link } from 'react-router-dom';
-import CommentForm from '../components/comment-form';
-import ReviewList from '../components/review-list';
+import ReviewsList from '../components/review-list';
+import { OffersMock } from '../mocks/offers';
+import { OfferType } from '../types';
+import { CitiesMock } from '../mocks/cities';
+import { PointsMock } from '../mocks/points';
 import Map from '../components/map';
-import { points } from '../mocks/points';
-import { amsterdam } from '../mocks/amsterdam';
 import OfferList from '../components/OfferList';
-import { offers } from '../mocks/offers';
+import { typeOfCardList } from '../config';
 
-type OfferPageProps = {
-  reviews: ReviewType[];
+type OfferScreenProps = {
+  offer: OfferType;
 }
 
-export default function OfferScreen({ reviews }: OfferPageProps): JSX.Element {
+export default function OfferScreen({offer}: OfferScreenProps): JSX.Element {
   return (
     <div className="page">
       <header className="header">
@@ -20,7 +20,7 @@ export default function OfferScreen({ reviews }: OfferPageProps): JSX.Element {
           <div className="header__wrapper">
             <div className="header__left">
               <Link to='/' className="header__logo-link">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </Link>
             </div>
             <nav className="header__nav">
@@ -51,33 +51,35 @@ export default function OfferScreen({ reviews }: OfferPageProps): JSX.Element {
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/room.jpg" alt="Photo studio" />
+                <img className="offer__image" src="img/room.jpg" alt="Photo studio"/>
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
+                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"/>
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio" />
+                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio"/>
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio" />
+                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio"/>
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio" />
+                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio"/>
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
+                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"/>
               </div>
             </div>
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>Premium</span>
-              </div>
+              {offer.isPremium ? (
+                <div className="offer__mark">
+                  <span>Premium</span>
+                </div>
+              ) : null}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {offer.name}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -88,14 +90,14 @@ export default function OfferScreen({ reviews }: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: '80%' }}></span>
+                  <span style={{width: `${(offer.rating / 5) * 100}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">4.8</span>
+                <span className="offer__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  Apartment
+                  {offer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   3 Bedrooms
@@ -105,7 +107,7 @@ export default function OfferScreen({ reviews }: OfferPageProps): JSX.Element {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;120</b>
+                <b className="offer__price-value">&euro;{offer.cost}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
@@ -147,7 +149,7 @@ export default function OfferScreen({ reviews }: OfferPageProps): JSX.Element {
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="offer__user-name">
                     Angelina
@@ -160,26 +162,19 @@ export default function OfferScreen({ reviews }: OfferPageProps): JSX.Element {
                   <p className="offer__text">
                     A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
                   </p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>
                 </div>
               </div>
-              <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewList reviews={reviews} />
-                <CommentForm />
-              </section>
+              <ReviewsList reviews={offer.review} ></ReviewsList>
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={amsterdam} points={points.slice(0, 3)} selectedPoint={undefined} />
+            <Map points={[PointsMock[0], PointsMock[1], PointsMock[2]]} city={CitiesMock[1]} selectedPoint={undefined}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferList offerCards={offers.slice(0, 3)} />
+            <OfferList offers={[OffersMock[0], OffersMock[1], OffersMock[3]]} listType={typeOfCardList.nearest}/>
           </section>
         </div>
       </main>
