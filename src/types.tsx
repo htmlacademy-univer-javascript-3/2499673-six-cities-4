@@ -1,4 +1,9 @@
-import { store } from './store/index.js';
+import { AuthorizationStatus } from '../const';
+import { store } from '../store/index';
+import { Point } from './location';
+import { ExtendedOffer, Offer } from './offer';
+import { Review } from './review';
+import { UserData } from './user-data';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -51,3 +56,27 @@ export type ExtendedOffer = Pick<Offer, 'id' | 'title' | 'type' | 'price' | 'cit
   maxAdults: number;
   images: string[];
 };
+
+export type OfferData = {
+    chosenOffer?: ExtendedOffer;
+    reviews: Review[];
+    nearbyOffers: Offer[];
+    isChosenOfferDataLoading: boolean;
+  };
+
+export type OffersData = {
+    offers: Offer[];
+    isOffersDataLoading: boolean;
+  };
+
+export type UserProcess = {
+    authorizationStatus: AuthorizationStatus;
+    userData?: UserData;
+  };
+
+export type CommonData = {
+  sortType: string;
+  city: string;
+  highlightedMarker: Point | undefined;
+  error: string | null;
+}

@@ -4,14 +4,16 @@ import Map from '../components/map';
 import { typeOfCardList } from '../utils';
 import { useAppSelector } from '../hooks';
 import CityList from '../components/city-list';
-import CardsSortingOptions from '../components/cards-sorting';
-import Header from '../components/header';
+import { Header } from '../../components/header/header';
+import { CardsSortingOptions } from '../../components/cards-sorting-options/cards-sorting-options';
+import { getOffers } from '../../store/offers-data/selectors';
+import { getCity } from '../../store/common-data/selectors';
 
 export default function Main(): JSX.Element {
   const [city, offers] = useAppSelector((state) => [state.city, state.offers]);
   const chosenOffers = offers.filter((offer) => offer.city === city);
-  const points = chosenOffers.map((offer) => offer.point);
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const city = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
   return (
     <div className="page page--gray page--main">
       <Header/>
