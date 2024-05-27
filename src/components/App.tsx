@@ -1,16 +1,28 @@
 import MainScreen from '../pages/Main.tsx';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import LoginScreen from '../pages/Login.tsx';
 import FavoritesScreen from '../pages/Favorites.tsx';
 import NotFoundScreen from '../pages/PageNotFound.tsx';
 import OfferScreen from '../pages/Offer.tsx';
 import PrivateRoute from './private-route.tsx';
 import { AppRoute, AuthorizationStatus } from '../config.ts';
-import { OfferType } from '../types';
-import { OffersMock } from '../mocks/offers.ts';
+import { useAppSelector } from '../../hooks/index.ts';
+import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
+import HistoryRouter from '../history-route/history-route.tsx';
+import browserHistory from '../../browser-history.ts';
+
 
 export default function App(): JSX.Element {
-  const favourites: OfferType[] = OffersMock.filter((o) => o.isFavorite);
+  
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  if (isOffersDataLoading || authorizationStatus === AuthorizationStatus.Unknown) {
+    return (
+      <LoadingScreen />
+    );
+  }
+  
   return (
     <BrowserRouter>
       <Routes>
