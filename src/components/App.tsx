@@ -1,33 +1,31 @@
-import Main from '../pages/Main';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PageNotFound from '../pages/PageNotFound';
-import Offer from '../pages/Offer';
-import Login from '../pages/Login';
-import Favorites from '../pages/Favorites';
-import PrivateRoute from './private-route';
+import MainScreen from '../pages/Main.tsx';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import LoginScreen from '../pages/Login.tsx';
+import FavoritesScreen from '../pages/Favorites.tsx';
+import NotFoundScreen from '../pages/PageNotFound.tsx';
+import OfferScreen from '../pages/Offer.tsx';
+import PrivateRoute from './private-route.tsx';
+import { AppRoute, AuthorizationStatus } from '../config.ts';
 import { OfferType } from '../types';
-import { ReviewType } from '../types';
+import { OffersMock } from '../mocks/offers.ts';
 
-export type AppPropts = {
-  displayedPlaces: number;
-  offers: OfferType[];
-  reviews: ReviewType[];
-}
-
-export default function App({ displayedPlaces, offers, reviews }: AppPropts): JSX.Element {
+export default function App(): JSX.Element {
+  const favourites: OfferType[] = OffersMock.filter((o) => o.isFavorite);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main displayedPlaces={displayedPlaces} offers={offers} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/favorites" element={
-          <PrivateRoute>
-            <Favorites favoritesList={offers.filter((obj) => obj.isBookmarked)} />
-          </PrivateRoute>
-        }
+        <Route path="*" element={<NotFoundScreen/>} />
+        <Route path={AppRoute.Main} element={<MainScreen/>} />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth} >
+              <FavoritesScreen offers={favourites}/>
+            </PrivateRoute>
+          }
         />
-        <Route path="offer/:id" element={<Offer reviews={reviews} />}></Route>
-        <Route path="*" element={<PageNotFound />} />
+        <Route path={AppRoute.Login} element={<LoginScreen/>} />
+        <Route path={AppRoute.Offer} element={<OfferScreen offer={OffersMock[0]}/>} />
       </Routes>
     </BrowserRouter>
   );

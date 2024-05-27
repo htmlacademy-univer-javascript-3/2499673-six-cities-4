@@ -1,3 +1,9 @@
+import { store } from './store/index.js';
+
+export type State = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+
 export type ReviewType = {
   id: number;
   author: string;
@@ -5,11 +11,10 @@ export type ReviewType = {
   isPro: boolean;
   rating: number;
   date: string;
-  description: string;
+  comment: string;
 };
 
-export type Point = {
-  title: string;
+export type PointType = {
   lat: number;
   lng: number;
 };
@@ -17,14 +22,17 @@ export type Point = {
 export type OfferType = {
   id: number;
   name: string;
-  description: string;
   img: string;
-  valuePerNight: number;
+  cost: number;
   type: 'Apartment' | 'Room';
-  isBookmarked: boolean;
   rating: number;
   review: ReviewType[];
   isPremium: boolean;
   isFavorite: boolean;
-  city: string;
+  city: CityType;
+  point: PointType;
 };
+
+export type CityType = {
+    title: string;
+} & PointType;

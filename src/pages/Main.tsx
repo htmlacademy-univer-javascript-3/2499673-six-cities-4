@@ -1,26 +1,24 @@
-import { OfferType } from '../types';
 import OfferList from '../components/OfferList';
 import { Link } from 'react-router-dom';
 import Map from '../components/map';
-import { amsterdam } from '../mocks/amsterdam';
-import { points } from '../mocks/points';
+import { typeOfCardList } from '../config';
+import { useAppSelector } from '../hooks';
+import CityList from '../components/city-list';
 
-type MainProps = {
-  displayedPlaces: number;
-  offers: OfferType[];
-}
-
-
-export default function Main({ displayedPlaces, offers }: MainProps): JSX.Element {
+export default function Main(): JSX.Element {
+  const [city, offers] = useAppSelector((state) => [state.city, state.offers]);
+  const chosenOffers = offers.filter((offer) => offer.city === city);
+  const points = chosenOffers.map((offer) => offer.point);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   return (
     <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link to='/' className="header__logo-link header__logo-link--active">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
+              <a className="header__logo-link header__logo-link--active">
+                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
+              </a>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -30,7 +28,7 @@ export default function Main({ displayedPlaces, offers }: MainProps): JSX.Elemen
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
                     <Link to="/favorites">
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favoriteOffers.length}</span>
                     </Link>
                   </a>
                 </li>
@@ -49,45 +47,14 @@ export default function Main({ displayedPlaces, offers }: MainProps): JSX.Elemen
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <CityList chosenCity={city}/>
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{displayedPlaces} places to stay in Amsterdam</b>
+              <b className="places__found">{chosenOffers.length} places to stay in {city.title}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -103,13 +70,11 @@ export default function Main({ displayedPlaces, offers }: MainProps): JSX.Elemen
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferList offerCards={offers} />
-              </div>
+              <OfferList offers={chosenOffers} listType={typeOfCardList.standart}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" >
-                <Map points={points} city={amsterdam} selectedPoint={undefined} />
+              <section className="cities__map map">
+                <Map points={points} city={city} selectedPoint={undefined}/>
               </section>
             </div>
           </div>
