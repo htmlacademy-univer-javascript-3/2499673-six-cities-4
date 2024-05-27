@@ -1,3 +1,14 @@
+import { useAppDispatch } from '../../hooks';
+import { Link } from 'react-router-dom';
+import { redirectToRoute } from '../../store/action';
+import { changeCity } from '../../store/common-data/common-data';
+
+function getRandomCity() {
+  const cityKeys = Object.keys(cities) as (keyof typeof cities)[];
+  const randomIndex = Math.floor(Math.random() * cityKeys.length);
+  return cities[cityKeys[randomIndex]];
+}
+
 export default function Login(): JSX.Element {
   return (
     <div className="page page--gray page--login">
@@ -32,7 +43,7 @@ export default function Login(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
+                <span>{city}</span>
               </a>
             </div>
           </section>
