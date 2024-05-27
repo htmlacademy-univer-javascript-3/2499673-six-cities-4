@@ -6,7 +6,7 @@ import { ReviewsMock } from './reviews';
 export const OffersMock: OfferType[] = [
   {
     id: 1,
-    img: 'img/apartment-01.jpg',
+    img: ['img/apartment-01.jpg'],
     isPremium: true,
     cost: 120,
     name: 'Beautiful & luxurious studio at great location',
@@ -19,7 +19,7 @@ export const OffersMock: OfferType[] = [
   },
   {
     id: 2,
-    img: 'img/room.jpg',
+    img: ['img/room.jpg'],
     isPremium: false,
     cost: 80,
     name: 'Wood and stone place',
@@ -27,12 +27,12 @@ export const OffersMock: OfferType[] = [
     isFavorite: true,
     rating: 4,
     review: [ReviewsMock[1]],
-    city: CitiesMock[1],
+    city: CitiesMock[0],
     point: PointsMock[1]
   },
   {
     id: 3,
-    img: 'img/apartment-02.jpg',
+    img: ['img/apartment-02.jpg'],
     isPremium: false,
     cost: 132,
     name: 'Canal View Prinsengracht',
@@ -45,7 +45,7 @@ export const OffersMock: OfferType[] = [
   },
   {
     id: 4,
-    img: 'img/apartment-03.jpg',
+    img: ['img/apartment-03.jpg'],
     isPremium: true,
     cost: 180,
     name: 'Nice, cozy, warm big bed apartment',
