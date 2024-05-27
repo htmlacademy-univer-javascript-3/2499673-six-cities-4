@@ -6,10 +6,11 @@ import NotFoundScreen from '../pages/PageNotFound.tsx';
 import OfferScreen from '../pages/Offer.tsx';
 import PrivateRoute from './private-route.tsx';
 import { AppRoute, AuthorizationStatus } from '../config.ts';
-import { useAppSelector } from '../../hooks/index.ts';
-import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
-import HistoryRouter from '../history-route/history-route.tsx';
-import browserHistory from '../../browser-history.ts';
+import { useAppSelector } from '../hooks/index.ts';
+import LoadingScreen from '../pages/loading-screen.tsx';
+import HistoryRouter from '../history-route.tsx';
+import browserHistory from '../browser-history.ts';
+import MainRouteRedirection from './main-route-redirection.tsx';
 
 
 export default function App(): JSX.Element {
@@ -22,7 +23,7 @@ export default function App(): JSX.Element {
       <LoadingScreen />
     );
   }
-  
+
   return (
     <BrowserRouter>
       <Routes>
@@ -36,7 +37,14 @@ export default function App(): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Login} element={<LoginScreen/>} />
+                <Route
+          path={AppRoute.Login}
+          element={
+            <MainRouteRedirection >
+              <LoginScreen />
+            </MainRouteRedirection>
+          }
+        />
         <Route path={AppRoute.Offer} element={<OfferScreen offer={OffersMock[0]}/>} />
       </Routes>
     </BrowserRouter>
