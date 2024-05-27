@@ -1,17 +1,42 @@
 import { Link } from 'react-router-dom';
 import ReviewsList from '../components/review-list';
 import { OffersMock } from '../mocks/offers';
-import { OfferType } from '../types';
-import { PointsMock } from '../mocks/points';
 import Map from '../components/map';
 import OfferList from '../components/OfferList';
 import { typeOfCardList } from '../utils';
+import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 type OfferScreenProps = {
   offer: OfferType;
 }
 
 export default function OfferScreen({ offer }: OfferScreenProps): JSX.Element {
+  const reviews = useAppSelector((state) => state.reviews);
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
+  const city = useAppSelector((state) => state.offers[0].city);
+
+  const displayedNearby = (nearbyOffers).slice(
+    0,
+    MAXIMUM_NEARBY_PREVIEW
+  );
+
+  const id = String(useParams().id);
+  useEffect(() => {
+    dispatch(fetchOfferAction(id));
+    dispatch(fetchReviewsAction(id));
+    dispatch(fetchNearbyAction(id));
+  }, [dispatch, id]);
+
+  const isSelectedOfferDataLoading = useAppSelector((state) => state.isChosenOfferDataLoading);
+  if (isSelectedOfferDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <div className="page">
       <header className="header">
@@ -47,28 +72,11 @@ export default function OfferScreen({ offer }: OfferScreenProps): JSX.Element {
 
       <main className="page__main page__main--offer">
         <section className="offer">
-          <div className="offer__gallery-container container">
-            <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-            </div>
-          </div>
+        {offer?.images.map((image) => (
+                <div className="offer__image-wrapper" key={image}>
+                  <img className="offer__image" src={image} alt="Photo studio" />
+                </div>
+              ))}
           <div className="offer__container container">
             <div className="offer__wrapper">
               {offer.isPremium ? (
@@ -112,36 +120,11 @@ export default function OfferScreen({ offer }: OfferScreenProps): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  <li className="offer__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="offer__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Towels
-                  </li>
-                  <li className="offer__inside-item">
-                    Heating
-                  </li>
-                  <li className="offer__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="offer__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="offer__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="offer__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="offer__inside-item">
-                    Fridge
-                  </li>
+                {offer?.goods.map((good) => (
+                    <li className="offer__inside-item" key={good}>
+                      {good}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="offer__host">
@@ -151,7 +134,7 @@ export default function OfferScreen({ offer }: OfferScreenProps): JSX.Element {
                     <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
-                    Angelina
+                  <ReviewsList reviews={reviews} />
                   </span>
                   <span className="offer__user-status">
                     Pro
@@ -159,7 +142,7 @@ export default function OfferScreen({ offer }: OfferScreenProps): JSX.Element {
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+                  {offer?.description}
                   </p>
                 </div>
               </div>
@@ -167,13 +150,13 @@ export default function OfferScreen({ offer }: OfferScreenProps): JSX.Element {
             </div>
           </div>
           <section className="offer__map map">
-            <Map points={[PointsMock[0], PointsMock[1], PointsMock[2]]} />
+          <Map points={displayedNearby.map((nearOffer) => nearOffer.location)} city={nearbyOffers.length > 0 ? nearbyOffers[0].city : city} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferList offers={[OffersMock[0], OffersMock[1], OffersMock[3]]} listType={typeOfCardList.nearest} />
+            <OfferList offers={displayedNearby} listType={typeOfCardList.nearest} />
           </section>
         </div>
       </main>

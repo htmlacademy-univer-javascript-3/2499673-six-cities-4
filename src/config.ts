@@ -23,55 +23,13 @@ export const URL_MARKER_STANDART =
     Offers = '/offers',
   }
   
-  export const CITIES: CityType[] = [
-    {
-      name: 'Paris',
-      location: {
-        latitude: 48.864716,
-        longitude: 2.349014,
-        zoom: 11,
-      },
-    },
-    {
-      name: 'Brussels',
-      location: {
-        latitude: 50.85034,
-        longitude: 4.35171,
-        zoom: 11,
-      },
-    },
-    {
-      name: 'Cologne',
-      location: {
-        latitude: 50.935173,
-        longitude: 6.953101,
-        zoom: 11,
-      },
-    },
-    {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.3740300,
-        longitude: 4.8896900,
-        zoom: 11,
-      },
-    },
-    {
-      name: 'Hamburg',
-      location: {
-        latitude: 53.551086,
-        longitude: 9.993682,
-        zoom: 11,
-      },
-    },
-    {
-      name: 'Dusseldorf',
-      location: {
-        latitude: 51.233334,
-        longitude: 6.783333,
-        zoom: 11,
-      },
-    },
-  ];
+  export const cities = {
+    Paris: 'Paris',
+    Cologne: 'Cologne',
+    Brussels: 'Brussels',
+    Amsterdam: 'Amsterdam',
+    Hamburg: 'Hamburg',
+    Dusseldorf: 'Dusseldorf',
+  };
   
   export const TIMEOUT_SHOW_ERROR = 2000;
