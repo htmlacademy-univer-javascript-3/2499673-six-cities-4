@@ -2,16 +2,20 @@ import { Link } from 'react-router-dom';
 import { logoutAction } from '../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { AppRoute, AuthorizationStatus } from '../config';
+import { getAuthorizationStatus, getUserData } from '../store/user-process/selectors';
+import { getFavoriteOffersId } from '../store/favorite-process/selectors';
 
-function HeaderNavigation(): JSX.Element {
+export default function LoginNavigation(): JSX.Element {
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state.offers);
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-  const userData = useAppSelector((state) => state.userData);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const userData = useAppSelector(getUserData);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const handleSignOut = () => {
     dispatch(logoutAction());
   };
+
+  const favoriteNumber = useAppSelector(getFavoriteOffersId);
+
   return (
     <nav className="header__nav">
       {authorizationStatus === AuthorizationStatus.Auth ? (
@@ -21,7 +25,7 @@ function HeaderNavigation(): JSX.Element {
               <div className="header__avatar-wrapper user__avatar-wrapper">
               </div>
               <span className="header__user-name user__name">{userData?.email}</span>
-              <span className="header__favorite-count">{favoriteOffers.length}</span>
+              <span className="header__favorite-count">{favoriteNumber.length}</span>
             </Link>
           </li>
           <li className="header__nav-item">
@@ -44,5 +48,3 @@ function HeaderNavigation(): JSX.Element {
     </nav>
   );
 }
-
-export default HeaderNavigation;

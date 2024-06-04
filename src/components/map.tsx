@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import useMap from '../hooks/use-map';
-import { PointType } from '../types';
+import { City, Point } from '../types';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../hooks';
 import { URL_MARKER_CURRENT, URL_MARKER_STANDART } from '../config';
+import { getChosenOffer } from '../store/offer-data/selectors';
+import { getHighlightedMarker } from '../store/common-data/selectors';
 
 type MapProps = {
-  points: PointType[];
+  points: Point[];
+  city: City;
 }
 
 const currentIcon = new Icon({
@@ -22,21 +25,33 @@ const standartIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-
 export default function Map(props: MapProps): JSX.Element {
-  const city = useAppSelector((state) => state.city);
-  const highlightedMarker = useAppSelector((state) => state.highlightedMarker);
-  const {points} = props;
-  const mapRef = React.useRef(null);
+  const highlightedMarker = useAppSelector(getHighlightedMarker);
+
+  const { points, city } = props;
+  const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
+  const currentPoint = useAppSelector(getChosenOffer)?.location;
+
   useEffect(() => {
-    if(map) {
+    if (map) {
       const markerLayer = layerGroup().addTo(map);
+
+      if (currentPoint) {
+        const marker = new Marker({
+          lat: currentPoint.latitude,
+          lng: currentPoint.longitude,
+        });
+        marker
+          .setIcon(currentIcon)
+          .addTo(markerLayer);
+      }
+
       points.forEach((point) => {
         const marker = new Marker({
-          lat: point.lat,
-          lng: point.lng
+          lat: point.latitude,
+          lng: point.longitude
         });
         let icon;
         if (point === highlightedMarker) {
@@ -45,15 +60,17 @@ export default function Map(props: MapProps): JSX.Element {
           icon = standartIcon;
         }
         marker
+          .setIcon(icon)
           .addTo(markerLayer);
       });
 
-      map.setView([city.lat, city.lng], 11);
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, highlightedMarker, city]);
+  }, [map, points, highlightedMarker, city, currentPoint]);
 
-  return <div style={{height: '100%'}} ref={mapRef}></div>;
+  return <div style={{ height: '100%' }} ref={mapRef}></div>;
 }

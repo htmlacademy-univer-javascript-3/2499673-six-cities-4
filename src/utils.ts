@@ -1,10 +1,10 @@
-import { OfferType } from './types';
+import { Offer } from './types';
 
 export enum typeOfCardList {
-    favourites = 'favorites__places',
-    nearest = 'near-places__list places__list',
-    standart = 'cities__places-list places__list tabs__content',
-  }
+  favourites = 'favorites__places',
+  nearest = 'near-places__list places__list',
+  standart = 'cities__places-list places__list tabs__content',
+}
 
 export const listToCard = new Map(
   [
@@ -22,21 +22,24 @@ export const filters = {
 };
 
 const sortFunctions = {
-  [filters.LOW_TO_HIGH]: (offers: OfferType[]) => offers.sort((offerA, offerB) => offerA.cost - offerB.cost),
-  [filters.HIGH_TO_LOW]: (offers: OfferType[]) => offers.sort((offerA, offerB) => offerB.cost - offerA.cost),
-  [filters.TOP_RATED]: (offers: OfferType[]) => offers.sort((offerA, offerB) => offerB.rating - offerA.rating)
+  [filters.LOW_TO_HIGH]: (offers: Offer[]) => offers.sort((offerA, offerB) => offerA.price - offerB.price),
+  [filters.HIGH_TO_LOW]: (offers: Offer[]) => offers.sort((offerA, offerB) => offerB.price - offerA.price),
+  [filters.TOP_RATED]: (offers: Offer[]) => offers.sort((offerA, offerB) => offerB.rating - offerA.rating)
 };
 
 export const getSortedOffers = (
-  offers: OfferType[],
+  offers: Offer[],
   sortType: string
 ) => {
+  const offersCopy = offers.slice();
   if (sortFunctions[sortType]) {
-    return sortFunctions[sortType](offers);
+    return sortFunctions[sortType](offersCopy);
   } else if (sortType === filters.POPULAR) {
     return offers;
   }
 };
+
+export const ratingPercentage = (rating: number) => `${(rating / 5) * 100}%`;
 
 export const extractYearMonth = (initDate: string): string => {
   const date = new Date(initDate);

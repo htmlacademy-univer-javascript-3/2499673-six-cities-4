@@ -1,30 +1,27 @@
-import { CityType } from '../types';
-import { useAppDispatch } from '../hooks';
-import { changeCity } from '../store/action';
-import { CitiesMock } from '../mocks/cities';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { cities } from '../config';
+import { changeCity } from '../store/common-data/common-data';
+import { getCity } from '../store/common-data/selectors';
 
-type CityListProps = {
-  chosenCity: CityType;
-}
-
-export default function CityList({chosenCity}: CityListProps): JSX.Element {
+export default function CityList(): JSX.Element {
+  const chosenCity = useAppSelector(getCity);
   const dispatch = useAppDispatch();
-  const handleCityChange = (city: CityType) => {
+  const handleCityChange = (city: string) => {
     dispatch(changeCity(city));
   };
-  return(
+
+  return (
     <ul className="locations__list tabs__list">
-      {CitiesMock.map((city) => (
-        <li className="locations__item" key={city.title}>
+      {Object.keys(cities).map((city) => (
+        <li className="locations__item" key={city}>
           <a className={`locations__item-link tabs__item ${(city === chosenCity) ? 'tabs__item--active' : ''}`} onClick={() => {
             handleCityChange(city);
           }}
           >
-            <span>{city.title}</span>
+            <span>{city}</span>
           </a>
         </li>
       ))}
     </ul>
   );
 }
-
