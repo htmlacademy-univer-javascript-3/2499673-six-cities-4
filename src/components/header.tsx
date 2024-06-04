@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import LoginNavigation from '../login-navigation/login-navigation';
-import { AppRoute } from '../../const';
+import LoginNavigation from './login-navigation';
+import { AppRoute } from '../config';
 
-function Header(): JSX.Element {
+export default function Header(): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -18,5 +18,3 @@ function Header(): JSX.Element {
     </header>
   );
 }
-
-export default Header;

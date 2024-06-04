@@ -1,43 +1,45 @@
-import MainScreen from '../pages/Main.tsx';
+import MainScreen from '../pages/main-screen';
 import { Route, Routes } from 'react-router-dom';
-import LoginScreen from '../pages/Login.tsx';
-import FavoritesScreen from '../pages/Favorites.tsx';
-import NotFoundScreen from '../pages/PageNotFound.tsx';
-import OfferScreen from '../pages/Offer.tsx';
-import PrivateRoute from './private-route.tsx';
-import { AppRoute, AuthorizationStatus } from '../config.ts';
+import LoginScreen from '../pages/login-screen';
+import FavoritesScreen from '../pages/favorites-screen';
+import NotFoundScreen from '../pages/page-not-found';
+import OfferScreen from '../pages/offer-screen';
+import PrivateRoute from './private-route';
+import { AppRoute, AuthorizationStatus } from '../config';
 import { useAppSelector } from '../hooks/index.ts';
 import LoadingScreen from '../pages/loading-screen.tsx';
-import HistoryRouter from '../history-route.tsx';
+import HistoryRouter from './history-route';
 import browserHistory from '../browser-history.ts';
 import MainRouteRedirection from './main-route-redirection.tsx';
+import { getAuthorizationStatus } from '../store/user-process/selectors.ts';
+import { getIsOffersDataLoading } from '../store/offers-data/selectors.ts';
 
 
 export default function App(): JSX.Element {
-  
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isFavoriteOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
-  if (isOffersDataLoading || authorizationStatus === AuthorizationStatus.Unknown) {
+  if (isOffersDataLoading || authorizationStatus === AuthorizationStatus.Unknown || isFavoriteOffersDataLoading) {
     return (
       <LoadingScreen />
     );
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route path="*" element={<NotFoundScreen/>} />
-        <Route path={AppRoute.Main} element={<MainScreen/>} />
+        <Route path="*" element={<NotFoundScreen />} />
+        <Route path={AppRoute.Main} element={<MainScreen />} />
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth} >
-              <FavoritesScreen offers={favourites}/>
+            <PrivateRoute >
+              <FavoritesScreen />
             </PrivateRoute>
           }
         />
-                <Route
+        <Route
           path={AppRoute.Login}
           element={
             <MainRouteRedirection >
@@ -45,8 +47,8 @@ export default function App(): JSX.Element {
             </MainRouteRedirection>
           }
         />
-        <Route path={AppRoute.Offer} element={<OfferScreen offer={OffersMock[0]}/>} />
+        <Route path={AppRoute.Offer} element={<OfferScreen />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }

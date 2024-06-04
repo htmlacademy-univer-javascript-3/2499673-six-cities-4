@@ -1,46 +1,39 @@
-import { AuthorizationStatus } from '../const';
-import { store } from '../store/index';
-import { Point } from './location';
-import { ExtendedOffer, Offer } from './offer';
-import { Review } from './review';
-import { UserData } from './user-data';
+import { AuthorizationStatus } from './config';
+import { store } from './store/index';
 
-export type State = ReturnType<typeof store.getState>;
-
-export type AppDispatch = typeof store.dispatch;
-
-export type ReviewType = {
-  id: number;
-  author: string;
-  avatar: string;
-  isPro: boolean;
-  rating: number;
-  date: string;
-  comment: string;
+export type AuthData = {
+  email: string;
+  password: string;
 };
 
-export type PointType = {
-  lat: number;
-  lng: number;
+export type FavoriteData = {
+  id: string;
+  status: number;
 };
 
-export type OfferType = {
-  id: number;
+export type Point = {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+}
+
+export type City = {
   name: string;
-  img: string[];
-  cost: number;
-  type: 'Apartment' | 'Room';
-  rating: number;
-  review: ReviewType[];
-  isPremium: boolean;
-  isFavorite: boolean;
-  city: CityType;
-  point: PointType;
-};
+  location: Point;
+}
 
-export type CityType = {
-    title: string;
-} & PointType;
+export type Offer = {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: City;
+  location: Point;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
+};
 
 type Host = {
   name: string;
@@ -57,22 +50,47 @@ export type ExtendedOffer = Pick<Offer, 'id' | 'title' | 'type' | 'price' | 'cit
   images: string[];
 };
 
+export type User = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+}
+
+export type Review = {
+  id: string;
+  date: string;
+  user: User;
+  comment: string;
+  rating: number;
+}
+
+export type UserData = {
+  name: string;
+  email: string;
+  token: string;
+  avatarUrl: string;
+  isPro: boolean;
+};
+
 export type OfferData = {
-    chosenOffer?: ExtendedOffer;
-    reviews: Review[];
-    nearbyOffers: Offer[];
-    isChosenOfferDataLoading: boolean;
-  };
+  chosenOffer?: ExtendedOffer;
+  reviews: Review[];
+  nearbyOffers: Offer[];
+  isChosenOfferDataLoading: boolean;
+  isCommentPosting: boolean;
+  isCommentRejected: boolean;
+};
 
 export type OffersData = {
-    offers: Offer[];
-    isOffersDataLoading: boolean;
-  };
+  offers: Offer[];
+  isOffersDataLoading: boolean;
+  hasError: boolean;
+};
 
 export type UserProcess = {
-    authorizationStatus: AuthorizationStatus;
-    userData?: UserData;
-  };
+  authorizationStatus: AuthorizationStatus;
+  userData?: UserData;
+};
 
 export type CommonData = {
   sortType: string;
@@ -80,3 +98,14 @@ export type CommonData = {
   highlightedMarker: Point | undefined;
   error: string | null;
 }
+
+export type FavoriteProcess = {
+  favoriteOffers: Offer[];
+  isFavoriteOffersDataLoading: boolean;
+  favoritesNumber: number;
+  favoriteOffersId: string[];
+}
+
+export type State = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;

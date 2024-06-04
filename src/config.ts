@@ -1,5 +1,3 @@
-import { CityType } from './types';
-
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -19,17 +17,30 @@ export const URL_MARKER_CURRENT =
 export const URL_MARKER_STANDART =
   '/img/pin.svg';
 
-  export enum APIRoute {
-    Offers = '/offers',
-  }
-  
-  export const cities = {
-    Paris: 'Paris',
-    Cologne: 'Cologne',
-    Brussels: 'Brussels',
-    Amsterdam: 'Amsterdam',
-    Hamburg: 'Hamburg',
-    Dusseldorf: 'Dusseldorf',
-  };
-  
-  export const TIMEOUT_SHOW_ERROR = 2000;
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+  Comments = '/comments',
+  Nearby = '/nearby',
+  Favorite = '/favorite'
+}
+
+export const cities = {
+  Paris: 'Paris',
+  Cologne: 'Cologne',
+  Brussels: 'Brussels',
+  Amsterdam: 'Amsterdam',
+  Hamburg: 'Hamburg',
+  Dusseldorf: 'Dusseldorf',
+};
+
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum NameSpace {
+  Offer = 'OFFER',
+  Offers = 'OFFERS',
+  User = 'USER',
+  Common = 'COMMON',
+  Favorite = 'FAVORITE'
+}

@@ -1,22 +1,28 @@
-import React from 'react';
+import { memo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { filters } from '../utils';
-import { changeSortOptions } from '../store/action';
+import { changeSortType } from '../store/common-data/common-data';
+import { getSortType } from '../store/common-data/selectors';
 
-export default function CardsSortingOptions(): JSX.Element {
-  const chosenSortType = useAppSelector((state) => state.sortType);
+function CardsSortingOptionsComponent(): JSX.Element {
+  const chosenSortType = useAppSelector(getSortType);
   const dispatch = useAppDispatch();
-  const [isSortOpened, setIsSortOpened] = React.useState(false);
+  const [isSortOpened, setIsSortOpened] = useState(false);
+
+  const handleSortOptionClick = (sortType: string) => {
+    dispatch(changeSortType(sortType));
+    setIsSortOpened(false);
+  };
+
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
+      <span className="places__sorting-caption" style={{ paddingRight: '2px' }}>Sort by</span>
       <span className="places__sorting-type" tabIndex={0} onClick={() => setIsSortOpened(!isSortOpened)}>
         {chosenSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${(isSortOpened) ? 'places__options--opened' : ''}`}>
       <ul className={`places__options places__options--custom ${isSortOpened ? 'places__options--opened' : ''}`}>
         <li
           className={`places__option ${chosenSortType === filters.POPULAR ? 'places__option--active' : ''}`}
@@ -50,3 +56,5 @@ export default function CardsSortingOptions(): JSX.Element {
     </form>
   );
 }
+
+export const CardsSortingOptions = memo(CardsSortingOptionsComponent);

@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { NameSpace, cities } from '../../const';
+import { NameSpace, cities } from '../../config';
 import { filters } from '../../utils';
-import { CommonData } from '../../types/state';
-import { Point } from '../../types/location';
+import { CommonData } from '../../types';
+import { Point } from '../../types';
 
 const initialState: CommonData = {
   sortType: filters.POPULAR,
