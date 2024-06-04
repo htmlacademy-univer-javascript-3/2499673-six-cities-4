@@ -7,7 +7,7 @@ import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction } from '../stor
 import LoadingScreen from './loading-screen';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import Header from '../components/header';
+import { Header } from '../components/header';
 import { getChosenOffer, getIsChosenOfferDataLoading, getNearbyOffers, getReviews } from '../store/offer-data/selectors';
 import { getOffers } from '../store/offers-data/selectors';
 import { changeHighlightedMarker } from '../store/common-data/common-data';

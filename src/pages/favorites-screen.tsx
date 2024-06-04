@@ -3,7 +3,7 @@ import { typeOfCardList } from '../utils';
 import OfferList from '../components/offer-list';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { AppRoute } from '../config';
-import Header from '../components/header';
+import { Header } from '../components/header';
 import { getOffers } from '../store/offers-data/selectors';
 import { getFavoriteOffersId } from '../store/favorite-process/selectors';
 import { changeCity } from '../store/common-data/common-data';

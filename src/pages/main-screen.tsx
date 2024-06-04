@@ -3,7 +3,7 @@ import Map from '../components/map';
 import { typeOfCardList } from '../utils';
 import { useAppSelector } from '../hooks';
 import CityList from '../components/city-list';
-import Header from '../components/header';
+import { Header } from '../components/header';
 import { CardsSortingOptions } from '../components/cards-sorting';
 import { getErrorStatus, getOffers } from '../store/offers-data/selectors';
 import { getCity } from '../store/common-data/selectors';
